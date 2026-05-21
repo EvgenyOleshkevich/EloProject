@@ -1,0 +1,68 @@
+  <div class="modal-backdrop" (click)="closeResultDialog()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h3>Match result</h3>
+
+      <div class="modal__row">
+        <label>Score player {{ match.player1 || '1' }}</label>
+        <input
+          type="number"
+          min="0"
+          [ngModel]="matchInput.score1"
+          (ngModelChange)="onScore1Type($event)"
+        />
+      </div>
+
+      <div class="modal__row">
+        <label>Score player {{ match.player2 || '2' }}</label>
+        <input
+          type="number"
+          min="0"
+          [ngModel]="matchInput.score2"
+          (ngModelChange)="onScore2Type($event)"
+        />
+      </div>
+
+      <div class="modal__row">
+        <label>Winner</label>
+
+        <select
+          [ngModel]="matchInput.result"
+          (ngModelChange)="onChangeWinner($event)"
+        >
+          <option [ngValue]="MatchResult.Player1Win">
+            Player {{ match.player1 || '1' }} win
+          </option>
+          <option [ngValue]="MatchResult.Player2Win">
+            Player {{ match.player2 || '2' }} win
+          </option>
+          @if (isDrawAllowed) {
+            <option [ngValue]="MatchResult.Draw">
+                Draw
+            </option>
+            }
+        </select>
+      </div>
+
+      @if (errorMessage()) {
+        <small class="modal-form__error">{{ errorMessage() }}</small>
+      }
+
+      <div class="modal__actions">
+        <button
+          type="button"
+          class="modal__button modal__button--danger"
+          (click)="closeResultDialog()"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          class="modal__button modal__button--secondary"
+          (click)="onSubmit()"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,142 @@
+<div class="matches-page">
+  <div class="matches-header">
+    <h2>Matches</h2>
+
+    @if (isGameFromService()) {
+      <app-game-picker
+        [games]="games()"
+        (selectGame)="selectGame($event)"
+        (clearGame)="clearGame()"/>
+    }
+  </div>
+
+  @if (selectedGame()) {
+    <p class="matches-subtitle">
+      Matches for: <strong>{{ selectedGame()!.name }}</strong>
+    </p>
+  } @else {
+    <p class="matches-subtitle">Choose a game to load matches</p>
+  }
+
+  <div class="matches-content">
+    <div class="matches-table-slot">
+      <app-table
+        [columns]="columns"
+        [objects]="matches()"
+        [showOpen]="true"
+        [showDelete]="true"
+        (open)="onOpen($event)"
+        (delete)="onRequestDelete($event)"/>
+    </div>
+
+    @if (selectedGame()) {
+      <div class="match-form-wrapper">
+            <form class="match-form" (ngSubmit)="onSubmit()">
+                <h3 class="match-form__title">Add match</h3>
+
+            <div #field1 class="match-form__field">
+                <label for="player1">Player 1</label>
+
+                <div class="match-form__autocomplete">
+                <input
+                    id="player1"
+                    name="player1"
+                    type="text"
+                    [ngModel]="player1Search()"
+                    (ngModelChange)="onPlayer1Input($event)"
+                    (focus)="isPlayer1DropdownOpen.set(true)"
+                    placeholder="Write player 1 name"
+                    autocomplete="off"
+                />
+
+                @if (isPlayer1DropdownOpen() && filteredPlayers1().length > 0) {
+                    <div class="match-form__dropdown">
+                    @for (player of filteredPlayers1(); track player.id) {
+                        <button
+                        type="button"
+                        class="match-form__dropdown-item"
+                        (click)="selectPlayer1(player)"
+                        >
+                        {{ player.name }}
+                        </button>
+                    }
+                    </div>
+                }
+                </div>
+
+                @if (isPlayer1Empty()) {
+                <small class="match-form__error">Player 1 is required</small>
+                }
+            </div>
+
+            <div #field2 class="match-form__field">
+                <label for="player2">Player 2</label>
+
+                <div class="match-form__autocomplete">
+                <input
+                    id="player2"
+                    name="player2"
+                    type="text"
+                    [ngModel]="player2Search()"
+                    (ngModelChange)="onPlayer2Input($event)"
+                    (focus)="isPlayer2DropdownOpen.set(true)"
+                    placeholder="Write player 2 name"
+                    autocomplete="off"
+                />
+
+                @if (isPlayer2DropdownOpen() && filteredPlayers2().length > 0) {
+                    <div class="match-form__dropdown">
+                    @for (player of filteredPlayers2(); track player.id) {
+                        <button
+                        type="button"
+                        class="match-form__dropdown-item"
+                        (click)="selectPlayer2(player)"
+                        >
+                        {{ player.name }}
+                        </button>
+                    }
+                    </div>
+                }
+                </div>
+
+                @if (isPlayer2Empty()) {
+                <small class="match-form__error">Player 2 is required</small>
+                }
+            </div>
+
+            @if (arePlayersSame()) {
+                <small class="match-form__error">
+                Players must be different
+                </small>
+            }
+
+            <div class="match-form__field">
+                <label class="match-form__label">Result</label>
+
+                <app-radio-buttons
+                    title="Result"
+                    name="Match Result Radio"
+                    [options]="resultOptions"
+                    [selectedValue]="MatchResult.Draw"
+                    (selectionChange)="setResult($event)"/>
+
+                @if (isResultEmpty()) {
+                    <small class="match-form__error">Result is required</small>
+                }
+            </div>
+
+            <button type="submit" class="match-form__submit" [disabled]="isFormInvalid()">
+                Create match
+            </button>
+            </form>
+        </div>
+    }
+  </div>
+</div>
+
+@if (selectedForDelete(); as object) {
+    <delete-confirm-modal
+        [title]="`${object.player1} vs ${object.player2}`"
+        (confirm)="onConfirmDelete()"
+        (close)="onCancelDelete()"/>
+}

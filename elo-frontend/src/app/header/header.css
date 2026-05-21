@@ -1,0 +1,46 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+}
+
+.navbar__left,
+.navbar__right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar__center {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.navbar__brand {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: inherit;
+}
+
+.navbar__center a {
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+}
+
+.navbar__center a.active {
+  color: #000;
+  border-bottom: 2px solid #000;
+}
+
+.navbar__right button {
+  padding: 0.5rem 0.9rem;
+  border: 1px solid #ccc;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+}

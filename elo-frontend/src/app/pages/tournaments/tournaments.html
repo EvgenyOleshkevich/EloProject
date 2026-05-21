@@ -1,0 +1,105 @@
+<div class="tournaments-page">
+  <div class="tournaments-header">
+    <h2>tournaments</h2>
+
+    @if (isGameFromService()) {
+        <app-game-picker
+            [games]="games()"
+            (selectGame)="selectGame($event)"
+            (clearGame)="clearGame()"/>
+    }
+  </div>
+
+  @if (selectedGame()) {
+    <p class="tournaments-subtitle">
+      tournaments for: <strong>{{ selectedGame()!.name }}</strong>
+    </p>
+  } @else {
+    <p class="tournaments-subtitle">Choose a game to load tournaments</p>
+  }
+
+  <div class="tournaments-content">
+    <div class="tournaments-table-slot">
+      <app-table
+        [columns]="columns"
+        [objects]="tournaments()"
+        [showOpen]="true"
+        [showUpdate]="true"
+        [showDelete]="true"
+        (open)="onOpen($event)"
+        (update)="onUpdate($event)"
+        (delete)="onRequestDelete($event)"/>
+    </div>
+
+    @if (selectedGame()) {
+      <div class="tournaments-form-wrapper">
+            <form class="tournaments-form">
+            <div class="tournaments-form__header">
+                <h3 class="tournaments-form__title">
+                    @if (selectedForUpdate()) {
+                        Edit tournament
+                    } @else {
+                        Add tournament
+                    }
+                </h3>
+
+                @if (selectedForUpdate()) {
+                    <button
+                        type="button"
+                        class="icon-button"
+                        (click)="onResetSelected()"
+                        aria-label="Reset selected tournament"
+                        title="Reset selected tournament">
+                    ✕
+                    </button>
+                }
+            </div>
+
+            <div class="tournaments-form__field">
+                <label for="tournamentName">tournament name</label>
+                <input
+                [(ngModel)]="tournamentInput.name"
+                type="text"
+                id="tournamentName"
+                name="tournamentName"
+                placeholder="Write tournament name"
+                />
+            </div>
+
+            <app-radio-buttons
+                title="Tournament Type"
+                name="Tournament Type Radio"
+                [options]="typeOptions"
+                [selectedValue]="tournamentInput.type"
+                (selectionChange)="onChangeType($event)"/>
+
+            <app-radio-buttons
+                title="Tournament Status"
+                name="Tournament Status Radio"
+                [options]="statusOptions"
+                [selectedValue]="tournamentInput.status"
+                (selectionChange)="onChangeStatus($event)"/>
+
+            @if (errorMessage()) {
+              <small class="form__error">{{ errorMessage() }}</small>
+            }
+
+            <button (click)="onSubmit()" type="submit" class="tournaments-form__submit">
+                @if (selectedForUpdate()) {
+                    Update tournament
+                } @else {
+                    Create tournament
+                }
+            </button>
+            </form>
+        </div>
+    }
+  </div>
+</div>
+
+@if (selectedForDelete(); as object) {
+    <delete-confirm-modal
+        [title]="object.name"
+        (confirm)="onConfirmDelete()"
+        (close)="onCancelDelete()"/>
+}

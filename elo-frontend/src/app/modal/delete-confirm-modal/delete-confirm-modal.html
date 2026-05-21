@@ -1,0 +1,36 @@
+<div class="modal-backdrop" (click)="onClose()">
+  <div class="modal" (click)="$event.stopPropagation()">
+
+    <!-- Заголовок -->
+    <div class="modal__header">
+      <h3 class="modal__title">
+        {{ title }}
+      </h3>
+    </div>
+
+    <!-- Контент -->
+    <div class="modal__body">
+      <p>{{ message }}</p>
+    </div>
+
+    <!-- Кнопки -->
+    <div class="modal__actions">
+      <button
+        type="button"
+        class="modal__button modal__button--secondary"
+        (click)="onClose()"
+      >
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        class="modal__button modal__button--danger"
+        (click)="onConfirm()"
+      >
+        Delete
+      </button>
+    </div>
+
+  </div>
+</div>

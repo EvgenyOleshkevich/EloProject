@@ -1,0 +1,178 @@
+enum CompetitionStatus {
+  PLANNED
+  ONGOING
+  COMPLETED
+  CANCELED
+}
+
+enum TournamentType {
+  SINGLE_ELIMINATION
+  DOUBLE_ELIMINATION
+  ROUND
+}
+
+enum PlayersOrder {
+  SORT
+  RANDOM
+  FROM_LIST
+}
+
+enum BracketType {
+  WINNER
+  LOSER
+  GRAND_FINAL
+  THIRD_PLACE
+  ROUND
+  GROUP
+}
+
+enum UserRole {
+  ADMIN
+  OPERATOR
+  PLAYER
+}
+
+enum MatchResult {
+  PLAYER_1_WIN
+  DRAW
+  PLAYER_2_WIN
+}
+
+type Game {
+  id: ID!
+  name: String!
+}
+
+type Player {
+  id: ID!
+  gameId: ID!
+  name: String!
+  elo: Int!
+  numberMatches: Int!
+}
+
+type TournamentMatchInfo {
+  round: Int!
+  position: Int!
+  previousMatch1Id: ID
+  previousMatch2Id: ID
+  nextWinMatchId: ID
+  nextLoseMatchId: ID
+  bracketType: BracketType!
+}
+
+type Match {
+  id: ID!
+  gameId: ID!
+  tournamentId: ID!
+  player1Id: ID
+  player2Id: ID
+  player1: String
+  player2: String
+  score1: Int
+  score2: Int
+  rating1: Int
+  rating2: Int
+  result: MatchResult
+  playedAt: String
+  status: CompetitionStatus!
+  tournamentInfo: TournamentMatchInfo
+}
+
+type Tournament {
+  id: ID!
+  gameId: ID!
+  name: String!
+  players: [Player!]
+  matches: [Match!]
+  createdAt: String!
+  type: TournamentType!
+  status: CompetitionStatus!
+}
+
+type User {
+  id: ID!
+  email: String!
+  role: UserRole!
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+input GameInput {
+  id: ID!
+  name: String!
+}
+
+input TournamentInput {
+  id: ID!
+  name: String!
+  type: TournamentType
+  status: CompetitionStatus
+}
+
+input MatchOrderInput {
+  matchId: ID!
+  player1Id: ID
+  player2Id: ID
+}
+
+input MatchInput {
+    id: ID!
+    score1: Int
+    score2: Int
+    result: MatchResult!
+}
+
+input RegisterInput {
+  email: String!
+  password: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input AssignRoleInput {
+  email: String!
+  password: String!
+}
+
+type Query {
+  games: [Game!]!
+  players: [Player!]!
+  playersByGame(gameId: ID!): [Player!]!
+  player(id: ID!): Player
+  playerByName(gameId: ID!, name: String!): Player
+  getNearestPlayers(id: ID!): [Player!]!
+  matchesByGame(gameId: ID!): [Match!]!
+  matchesByGameAndPlayer(gameId: ID!, playerId: ID!): [Match!]!
+  matchesByPlayer(playerId: ID!): [Match!]!
+  tournamentsByGame(gameId: ID!): [Tournament!]!
+  tournament(id: ID!): Tournament!
+}
+
+type Mutation {
+  createUser(input: RegisterInput!): AuthPayload!
+  updateUser(id: ID!, email: String!): User
+  updateUserRole(id: ID!, role: UserRole!): User
+  login(input: LoginInput!): AuthPayload
+  createGame(name: String!): Game
+  updateGame(game: GameInput!): Game
+  deleteGame(gameId: ID!): Boolean!
+  createPlayer(gameId: ID!, name: String!): Player
+  updatePlayer(id: ID!, name: String!): Player
+  deletePlayer(id: ID!): Boolean!
+  completeMatch(id1: ID!, id2: ID!, res: MatchResult!): [Player]
+  completeMatchWithNames(gameId: ID!, name1: String!, name2: String!, res: MatchResult!): [Player!]!
+  completeTournamentMatch(input: MatchInput!): [Match!]!
+  deleteMatch(id: ID!): Boolean!
+  createTournament(input: TournamentInput!): Tournament
+  updateTournament(input: TournamentInput!): Tournament
+  addPlayersToTournament(id: ID!, playerIds: [ID!]!, order: PlayersOrder!): [Match!]!
+  deleteTournament(id: ID!): Boolean!
+  reorderMatches(tournamentId: ID!, orders: [MatchOrderInput!]!): [Match!]!
+}

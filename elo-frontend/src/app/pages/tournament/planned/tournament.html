@@ -1,0 +1,154 @@
+<div class="tournament-page">
+  <div class="tournament-header">
+    <h2>{{tournament()?.name}}</h2>
+  </div>
+
+  @if (!isAddingPlayers()) {
+  <div class="tournament-content">
+
+        @if (tournamentType() == "SINGLE_ELIMINATION") {
+            <single-elimination-bracket 
+                [tournament]="tournament()"
+                (swapPlayers)="onSwapPlayers($event)"
+            />
+        }
+        @else {
+            <double-elimination-bracket 
+                [tournament]="tournament()"
+                (swapPlayers)="onSwapPlayers($event)"
+            />
+        }
+
+        <div class="tournament-form-wrapper">
+            <form class="tournament-form">
+            <div class="tournament-form__header">
+                <h3 class="tournament-form__title">
+                    Edit tournament
+                </h3>
+            </div>
+
+            <div class="tournament-form__field">
+                <label for="tournamentName">Name</label>
+                <input
+                [(ngModel)]="tournamentInput.name"
+                type="text"
+                id="tournamentName"
+                name="tournamentName"
+                placeholder="Write tournament name"
+                />
+            </div>
+
+            <app-radio-buttons
+                title="Type"
+                name="Tournament Type Radio"
+                [options]="typeOptions"
+                [selectedValue]="tournamentInput.type"
+                (selectionChange)="onChangeType($event)"/>
+
+            <!--
+            <app-radio-buttons
+                title="Tournament Status"
+                name="Tournament Status Radio"
+                [options]="statusOptions"
+                [selectedValue]="tournamentInput.status"
+                (selectionChange)="onChangeStatus($event)"/>
+            -->
+
+            @if (errorMessage()) {
+              <small class="form__error">{{ errorMessage() }}</small>
+            }
+
+            <button (click)="onSubmitInfo()" type="submit" class="tournament-form__submit">
+                Update tournament
+            </button>
+
+            @if (arePlayersReordered()) {
+                <button (click)="onOrderSubmit()" type="submit" class="tournament-form__submit">
+                    Reorder Players
+                </button>
+            }
+            @if (playersInTournament().length > 2) {
+                <button (click)="onStartTournament()" type="submit" class="tournament-form__submit">
+                    Start tournament
+                </button>
+            }
+            <hr>
+            <button (click)="onRequestAddingPlayers()" type="button" class="tournament-form__submit">
+                Add\Remove Players
+            </button>
+            </form>
+        </div>
+        
+  </div>
+  }
+
+  <div class="tournament-content">
+    @if (isAddingPlayers()) {
+        <div class="tournament-table-slot">
+          <app-table
+            [columns]="columns"
+            [objects]="filteredAvailablePlayers()"
+            [showAdd]="true"
+            (add)="onPlayerAdd($event)"/>
+        </div>
+
+        <div class="tournament-table-slot">
+          <app-table
+            [columns]="columns"
+            [objects]="playersInTournament()"
+            [showRemove]="true"
+            (remove)="onPlayerRemove($event)"/>
+        </div>
+
+        <div class="tournament-form-wrapper">
+            <form class="tournament-form">
+            <div class="tournament-form__header">
+                <h3 class="tournament-form__title">
+                    Search player
+                </h3>
+            </div>
+
+            <div class="tournament-form__field">
+                <label for="playerName">Player name</label>
+                <input
+                [(ngModel)]="playersSearch"
+                type="text"
+                id="playerName"
+                name="playerName"
+                placeholder="Write player name"
+                />
+            </div>
+
+            <app-radio-buttons
+                title="Players order"
+                name="Tournament Players Order Radio"
+                [options]="orderOptions"
+                [selectedValue]="playersOrder"
+                (selectionChange)="onChangeOrder($event)"/>
+
+
+            @if (isRosterChanged()) {
+                <button (click)="onPlayersSubmit()" type="submit" class="tournament-form__submit">
+                    Save Players
+                </button>
+            }
+            <hr>
+            <button (click)="onCancelAddingPlayers()" type="submit" class="tournament-form__cancel">
+                Cancel
+            </button>
+            </form>
+        </div>
+    }
+    @else {
+        <div class="tournament-table-slot">
+          <app-table
+            [columns]="columns"
+            [objects]="playersInTournament()"/>
+        </div>
+    }
+
+    @if (isAddingPlayers()) {
+        
+    }
+  </div>
+</div>

@@ -1,0 +1,159 @@
+.matches-page {
+  padding: 24px;
+}
+
+.matches-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 12px;
+}
+
+.matches-header h2 {
+  margin: 0;
+}
+
+.matches-subtitle {
+  margin: 0 0 16px;
+  color: #555;
+}
+
+.matches-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.matches-table-slot {
+  flex: 1;
+  min-width: 0;
+}
+
+.match-form-wrapper {
+  width: 320px;
+  flex-shrink: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.match-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.match-form__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.match-form__title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.match-form__autocomplete {
+  position: relative;
+}
+
+.match-form__autocomplete input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.match-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.match-form__field label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.match-form__field input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.match-form__field input:focus {
+  outline: none;
+  border-color: #9ca3af;
+}
+
+.match-form__submit {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: #111827;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.match-form__submit:hover {
+  opacity: 0.75;
+}
+
+.match-form__dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+
+  background: white;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.match-form__dropdown-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+
+  padding: 10px 12px;
+  border: none;
+  background: white;
+  cursor: pointer;
+}
+
+.match-form__dropdown-item:hover {
+  background: #f5f5f5;
+}
+
+.match-form__result-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.match-form__radio {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  gap: 8px;
+}
+
+.match-form__error {
+  color: #c62828;
+}

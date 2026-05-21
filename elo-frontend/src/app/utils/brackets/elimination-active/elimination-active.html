@@ -1,0 +1,79 @@
+<div class="bracket-scroll">
+    <div class="bracket-container">
+        <svg
+            class="bracket-svg"
+            [attr.width]="svgWidth()"
+            [attr.height]="svgHeight()"
+        >
+            <!-- обычные линии -->
+            @for (connector of connectors(); track connector.fromMatchId + '-' + connector.toMatchId) {
+            @if (connector.isVisible && !isConnectorHighlighted(connector)) {
+                <path
+                class="bracket-connector"
+                [attr.d]="connector.path"
+                fill="none"
+                />
+            }
+            }
+
+            <!-- подсвеченные линии поверх -->
+            @for (connector of connectors(); track connector.fromMatchId + '-' + connector.toMatchId + '-highlight') {
+            @if (isConnectorHighlighted(connector)) {
+                <path
+                class="bracket-connector bracket-connector--highlighted"
+                [attr.d]="connector.path"
+                fill="none"
+                />
+            }
+            }
+        </svg>
+
+        <div class="bracket-cards-layer">
+            @for (layout of matchLayouts(); track layout.match.id) {
+            <div
+                class="bracket-match-card"
+                [style.left.px]="layout.x"
+                [style.top.px]="layout.y"
+                >
+                <div
+                    class="match-slot"
+                    [class.match-slot--highlighted]="isBracketSlotHighlighted(layout.match, 1)"
+                    [ngClass]="getSlotResultClass(layout.match, 1)"
+                    (mouseenter)="onSlotRefHover(layout.match, 1)"
+                    (mouseleave)="onSlotRefLeave()"
+                    (click)="onMatchClick(layout.match, 1)"
+                    >
+                    <div class="match-slot__content">
+                        <span class="match-slot__text">
+                            {{ layout.match.player1 || 'TBD' }}
+                        </span>
+                    </div>
+                </div>
+
+                <div
+                    class="match-slot"
+                    [class.match-slot--highlighted]="isBracketSlotHighlighted(layout.match, 2)"
+                    [ngClass]="getSlotResultClass(layout.match, 2)"
+                    (mouseenter)="onSlotRefHover(layout.match, 2)"
+                    (mouseleave)="onSlotRefLeave()"
+                    (click)="onMatchClick(layout.match, 2)"
+                    >
+                    <div class="match-slot__content">
+                        <span class="match-slot__text">
+                            {{ layout.match.player2 || 'TBD' }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@if (selectedMatch(); as match) {
+    <app-match-result-dialog-component
+        [match]="match"
+        (submit)="submitMatchInput($event)"
+        (close)="closeModal()"/>
+}

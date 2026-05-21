@@ -1,0 +1,91 @@
+<div class="players-page">
+  <div class="players-header">
+    <h2>Players</h2>
+
+    @if (isGameFromService()) {
+      <app-game-picker
+        [games]="games()"
+        (selectGame)="selectGame($event)"
+        (clearGame)="clearGame()"/>
+    }
+  </div>
+
+  @if (selectedGame()) {
+    <p class="players-subtitle">
+      Players for: <strong>{{ selectedGame()!.name }}</strong>
+    </p>
+  } @else {
+    <p class="players-subtitle">Choose a game to load players</p>
+  }
+
+  <div class="players-content">
+    <div class="players-table-slot">
+      <app-table
+        [columns]="columns"
+        [objects]="players()"
+        [showOpen]="true"
+        [showUpdate]="true"
+        [showDelete]="true"
+        (open)="onOpen($event)"
+        (update)="onUpdate($event)"
+        (delete)="onRequestDelete($event)"/>
+    </div>
+
+    @if (selectedGame()) {
+      <div class="players-form-wrapper">
+            <form class="players-form">
+            <div class="players-form__header">
+                <h3 class="players-form__title">
+                    @if (selectedForUpdate()) {
+                        Edit player
+                    } @else {
+                        Add player
+                    }
+                </h3>
+
+                @if (selectedForUpdate()) {
+                    <button
+                        type="button"
+                        class="icon-button"
+                        (click)="onResetSelected()"
+                        aria-label="Reset selected player"
+                        title="Reset selected player">
+                    ✕
+                    </button>
+                }
+            </div>
+
+            <div class="players-form__field">
+                <label for="playerName">Player name</label>
+                <input
+                [(ngModel)]="playerName"
+                type="text"
+                id="playerName"
+                name="playerName"
+                placeholder="Write player name"
+                />
+            </div>
+
+            @if (errorMessage()) {
+              <small class="form__error">{{ errorMessage() }}</small>
+            }
+
+            <button (click)="onSubmit()" type="submit" class="players-form__submit">
+                @if (selectedForUpdate()) {
+                    Update player
+                } @else {
+                    Create player
+                }
+            </button>
+            </form>
+        </div>
+    }
+  </div>
+</div>
+
+@if (selectedForDelete(); as object) {
+    <delete-confirm-modal
+        [title]="object.name"
+        (confirm)="onConfirmDelete()"
+        (close)="onCancelDelete()"/>
+}

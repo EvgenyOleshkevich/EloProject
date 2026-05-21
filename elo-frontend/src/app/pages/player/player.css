@@ -1,0 +1,142 @@
+.player-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.player-table-slot {
+  flex: 1;
+  min-width: 0;
+}
+
+.rating-chart-card {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: white;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.rating-chart-wrapper {
+  height: 260px;
+  width: 100%;
+  position: relative;
+}
+
+.rating-chart-wrapper canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.rating-chart {
+  width: 100%;
+  height: 220px;
+}
+
+.rating-chart__line {
+  stroke: #38bdf8;
+  stroke-width: 3;
+}
+
+.rating-chart-empty {
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  background: #f8fafc;
+  border-radius: 10px;
+}
+
+.player-info-card {
+  width: 320px;
+  flex-shrink: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-left: auto;
+}
+
+.player-info-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.player-info-card__title {
+  margin: 0;
+}
+
+.player-info-card__rating {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #eff6ff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.player-info-card__section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.player-info-card__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.player-info-card__field input {
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.player-info-card__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.player-info-card__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.player-info-card__button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.player-info-card__button:hover {
+  opacity: 0.75;
+}
+
+.player-info-card__button--primary {
+  background: #111827;
+  color: #fff;
+}
+
+.player-info-card__button--danger {
+  background: #ef4444;
+  color: white;
+}
+
+.form__error {
+  display: block;
+  margin-top: 12px;
+  color: #c62828;
+}

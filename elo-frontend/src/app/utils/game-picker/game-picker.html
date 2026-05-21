@@ -1,0 +1,52 @@
+<div class="game-picker">
+    <label class="game-picker__label">Game</label>
+
+    <div class="game-picker__control">
+    <input
+        type="text"
+        class="game-picker__input"
+        [ngModel]="gameSearch()"
+        (ngModelChange)="onSearchInput($event)"
+        (focus)="openDropdown()"
+        placeholder="Choose game..."
+    />
+
+    @if (gameSearch()) {
+        <button
+        type="button"
+        class="game-picker__clear"
+        (click)="onClearGame()"
+        >
+        ×
+        </button>
+    }
+
+    <button
+        type="button"
+        class="game-picker__toggle"
+        (click)="toggleDropdown()"
+    >
+        ▼
+    </button>
+    </div>
+
+    @if (isGameDropdownOpen()) {
+    <div class="game-picker__dropdown">
+        @if (filteredGames().length > 0) {
+        @for (game of filteredGames(); track game.id) {
+            <button
+            type="button"
+            class="game-picker__option"
+            (click)="onSelectGame(game)"
+            >
+            {{ game.name }}
+            </button>
+        }
+        } @else {
+        <div class="game-picker__empty">
+            No games found
+        </div>
+        }
+    </div>
+    }
+</div>

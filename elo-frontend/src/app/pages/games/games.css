@@ -1,0 +1,92 @@
+.games-page {
+  padding: 24px;
+}
+
+.games-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 12px;
+}
+
+.games-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.games-table-slot {
+  flex: 1;
+  min-width: 0;
+}
+
+.games-form-wrapper {
+  width: 320px;
+  flex-shrink: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.games-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.games-form__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.games-form__title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.games-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.games-form__field label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.games-form__field input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.games-form__field input:focus {
+  outline: none;
+  border-color: #9ca3af;
+}
+
+.games-form__submit {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: #111827;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.games-form__submit:hover {
+  opacity: 0.75;
+}

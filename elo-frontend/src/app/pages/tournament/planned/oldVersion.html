@@ -1,0 +1,264 @@
+        <!--
+        <svg [attr.width]="svgWidth()" [attr.height]="svgHeight()">
+            @for (connector of connectors(); track connector.fromMatchId + '-' + connector.toMatchId) {
+                <path
+                class="bracket-connector"
+                [attr.d]="connector.path"
+                fill="none"
+                />
+            }
+
+            @for (layout of matchLayouts(); track layout.match.id) {
+                <g
+                class="bracket-match"
+                [attr.transform]="'translate(' + layout.x + ',' + layout.y + ')'"
+                >
+                <rect
+                    [attr.width]="layout.width"
+                    [attr.height]="layout.height"
+                    rx="10"
+                />
+                <line
+                    x1="0"
+                    y1="36"
+                    [attr.x2]="layout.width"
+                    y2="36"
+                />
+                <text x="12" y="22">{{ layout.match.player1 || 'TBD' }}</text>
+                <text x="12" y="58">{{ layout.match.player2 || 'TBD' }}</text>
+                </g>
+            }
+        </svg>
+
+        -->
+
+<!---
+         <div class="bracket-section">
+            <h3>Bracket</h3>
+
+            <div class="bracket-scroll">
+                <div class="bracket-container">
+                    <svg
+                        class="bracket-svg"
+                        [attr.width]="svgWidth()"
+                        [attr.height]="svgHeight()"
+                    >
+                        @for (connector of connectors(); track connector.fromMatchId + '-' + connector.toMatchId) {
+                        <path
+                            class="bracket-connector"
+                            [attr.d]="connector.path"
+                            fill="none"
+                        />
+                        }
+                    </svg>
+
+                    <div class="bracket-cards-layer">
+                        @for (layout of matchLayouts(); track layout.match.id) {
+                        <div
+                            class="bracket-match-card"
+                            [style.left.px]="layout.x"
+                            [style.top.px]="layout.y"
+                            >
+                            <div
+                                class="match-slot"
+                                cdkDropList
+                                [id]="getSlotDropListId(layout.match.id, 1)"
+                                [cdkDropListConnectedTo]="allSlotDropListIds()"
+                                [cdkDropListData]="createSlotRef(layout.match, 1)"
+                                (cdkDropListDropped)="onDrop($event)"
+                            >
+                                <div
+                                class="match-slot__content"
+                                cdkDrag
+                                [cdkDragData]="createSlotRef(layout.match, 1)"
+                                [cdkDragDisabled]="!canDragSlot(layout.match, 1)"
+                                >
+                                @if (canDragSlot(layout.match, 1)) {
+                                    <button
+                                        type="button"
+                                        class="slot-handle"
+                                        cdkDragHandle
+                                    >
+                                        ⋮⋮
+                                    </button>
+                                }
+                                <span>{{ layout.match.player1 || 'TBD' }}</span>
+                                
+                                </div>
+                            </div>
+
+                            <div
+                                class="match-slot"
+                                cdkDropList
+                                [id]="getSlotDropListId(layout.match.id, 2)"
+                                [cdkDropListConnectedTo]="allSlotDropListIds()"
+                                [cdkDropListData]="createSlotRef(layout.match, 2)"
+                                (cdkDropListDropped)="onDrop($event)"
+                            >
+                                <div
+                                class="match-slot__content"
+                                cdkDrag
+                                [cdkDragData]="createSlotRef(layout.match, 2)"
+                                [cdkDragDisabled]="!canDragSlot(layout.match, 2)"
+                                >
+                                @if (canDragSlot(layout.match, 2)) {
+                                    <button
+                                        type="button"
+                                        class="slot-handle"
+                                        cdkDragHandle
+                                    >
+                                        ⋮⋮
+                                    </button>
+                                }
+                                <span>{{ layout.match.player2 || 'TBD' }}</span>
+
+                                
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        
+<!--
+        <div class="bracket-scroll">
+                <div class="bracket-container">
+                    <svg
+                        class="bracket-svg"
+                        [attr.width]="svgWidth()"
+                        [attr.height]="svgHeight()"
+                    >
+                        @for (connector of connectors(); track connector.fromMatchId + '-' + connector.toMatchId) {
+                        <path
+                            class="bracket-connector"
+                            [attr.d]="connector.path"
+                            fill="none"
+                        />
+                        }
+                    </svg>
+
+                    <div class="bracket-cards-layer">
+                        @for (layout of matchLayouts(); track layout.match.id) {
+                        <div
+                            class="bracket-match-card"
+                            [style.left.px]="layout.x"
+                            [style.top.px]="layout.y"
+                            >
+                            @if (canDragSlot(layout.match, 1)) {
+                                <div
+                                    class="match-slot"
+                                    cdkDropList
+                                    [id]="getSlotDropListId(layout.match.id, 1)"
+                                    [class.drag-over]="isDragOver(layout.match.id, 1)"
+                                    [cdkDropListConnectedTo]="allSlotDropListIds()"
+                                    [cdkDropListData]="createSlotRef(layout.match, 1)"
+                                    (cdkDropListDropped)="onDrop($event)"
+                                    (cdkDropListEntered)="onDropListEntered($event)"
+                                    (cdkDropListExited)="onDropListExited($event)"
+                                    >
+                                            
+                                            
+                                    <div
+                                        class="match-slot__content"
+                                        cdkDrag
+                                        [cdkDragData]="createSlotRef(layout.match, 1)"
+                                        [cdkDragDisabled]="!canDragSlot(layout.match, 1)"
+                                        (cdkDragStarted)="onDragStarted(createSlotRef(layout.match, 1))"
+                                        (cdkDragEnded)="onDragEnded()"
+                                    >
+                                    @if (!isDragTarget(layout.match.id, 1)) {
+                                        <ng-template cdkDragPlaceholder>
+                                        <div class="match-slot__content drag-placeholder">
+                                                <button
+                                                    type="button"
+                                                    class="slot-handle"
+                                                >
+                                                    ⋮⋮
+                                            </button>
+                                            <span>{{ getSlotText(layout.match, 1) }}</span>
+                                        </div>
+                                        </ng-template>
+                                            <button
+                                                type="button"
+                                                class="slot-handle"
+                                                cdkDragHandle
+                                            >
+                                                ⋮⋮
+                                            </button>
+                                            <span class="match-slot__text">
+                                            {{ getSlotText(layout.match, 1) }}
+                                            </span>
+
+                                        
+                                }
+                                    </div>
+                                </div>
+                            }
+                            @else {
+                            <div class="match-slot">
+                                <div class="match-slot__content">
+                                <span> {{ layout.match.player1 || 'TBD' }} </span>
+                                </div>
+                            </div>
+                            }
+
+                            @if (canDragSlot(layout.match, 2)) {
+                                <div
+                                class="match-slot"
+                                cdkDropList
+                                [id]="getSlotDropListId(layout.match.id, 2)"
+                                [class.drag-over]="isDragOver(layout.match.id, 2)"
+                                [cdkDropListConnectedTo]="allSlotDropListIds()"
+                                [cdkDropListData]="createSlotRef(layout.match, 2)"
+                                (cdkDropListDropped)="onDrop($event)"
+                                (cdkDropListEntered)="onDropListEntered($event)"
+                                (cdkDropListExited)="onDropListExited($event)"
+                                >
+                                    <div
+                                        class="match-slot__content"
+                                        cdkDrag
+                                        [cdkDragData]="createSlotRef(layout.match, 2)"
+                                        [cdkDragDisabled]="!canDragSlot(layout.match, 2)"
+                                        (cdkDragStarted)="onDragStarted(createSlotRef(layout.match, 2))"
+                                        (cdkDragEnded)="onDragEnded()"
+                                    >
+                                    @if (!isDragTarget(layout.match.id, 2)) {
+                                        <ng-template cdkDragPlaceholder>
+                                        <div class="match-slot__content drag-placeholder">
+                                            <button
+                                                type="button"
+                                                class="slot-handle"
+                                            >
+                                                ⋮⋮
+                                            </button>
+                                            <span>{{ getSlotText(layout.match, 2) }}</span>
+                                        </div>
+                                        </ng-template>
+                                            <button
+                                                type="button"
+                                                class="slot-handle"
+                                                cdkDragHandle
+                                            >
+                                                ⋮⋮
+                                            </button>
+                                            <span class="match-slot__text">
+                                            {{ getSlotText(layout.match, 2) }}
+                                            </span>
+                                }
+                                    </div>
+                                </div>
+                            }
+                            @else {
+                            <div class="match-slot">
+                                <div class="match-slot__content">
+                                <span> {{ layout.match.player2 || 'TBD' }} </span>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>-->

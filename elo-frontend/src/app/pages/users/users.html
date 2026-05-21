@@ -1,0 +1,67 @@
+<div class="users-page">
+    <h2 class="users-header">Users</h2>
+    <div class="users-content">
+        <div class="users-table-slot">
+            <app-table
+                [columns]="columns"
+                [objects]="users()"
+                [showOpen]="true"
+                [showUpdate]="true"
+                [showDelete]="true"
+                (open)="onOpen($event)"
+                (update)="onUpdate($event)"
+                (delete)="onRequestDelete($event)"/>
+        </div>
+
+        <div class="users-form-wrapper">
+            <form class="users-form">
+            <div class="users-form__header">
+                <h3 class="users-form__title">
+                    @if (selectedForUpdate()) {
+                        Edit user
+                    } @else {
+                        Add user
+                    }
+                </h3>
+
+                @if (selectedForUpdate()) {
+                    <button
+                        type="button"
+                        class="icon-button"
+                        (click)="onResetSelected()"
+                        aria-label="Reset selected user"
+                        title="Reset selected user">
+                    ✕
+                    </button>
+                }
+            </div>
+
+            <div class="users-form__field">
+                <label for="userName">User name</label>
+                <input
+                [(ngModel)]="userName"
+                type="text"
+                id="userName"
+                name="userName"
+                placeholder="Write user name"
+                />
+            </div>
+
+            <button (click)="onSubmit()" type="submit" class="users-form__submit">
+                @if (selectedForUpdate()) {
+                    Update user
+                } @else {
+                    Create user
+                }
+            </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@if (selectedForDelete(); as object) {
+    <delete-confirm-modal
+        [title]="object.name"
+        (confirm)="onConfirmDelete()"
+        (close)="onCancelDelete()"/>
+}

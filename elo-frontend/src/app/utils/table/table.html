@@ -1,0 +1,60 @@
+<div class="template-table-wrapper">
+    <table class="template-table">
+        <thead>
+        <tr>
+            @for (column of columns; track column.key) {
+                <th>{{ column.title }}</th>
+            }
+            @if (hasActions) {
+            <th class="template-table__actions-header">Actions</th>
+            }
+        </tr>
+        </thead>
+        <tbody>
+        @if (objects.length > 0) {
+            @for (object of objects; track object[trackByKey]) {
+            <tr (dblclick)="onDblClick(object)">
+                @for (column of columns; track column.key) {
+                    @if (column.render) {
+                        <td>{{ column.render(object) }}</td>
+                    }
+                    @else {
+                        <td>{{ object[column.key] }}</td>
+                    }
+                }
+                @if (hasActions) {
+                <td class="template-table__actions">
+                    @if (showOpen) {
+                    <button class="template-table__button" type="button" (click)="onOpen(object)">Open</button>
+                    }
+
+                    @if (showUpdate) {
+                    <button class="template-table__button" type="button" (click)="onUpdate(object)">Update</button>
+                    }
+
+                    @if (showDelete) {
+                    <button class="template-table__button" type="button" (click)="onDelete(object)">Delete</button>
+                    }
+
+                    @if (showAdd) {
+                    <button class="template-table__button" type="button" (click)="onAdd(object)">Add</button>
+                    }
+
+                    @if (showRemove) {
+                    <button class="template-table__button" type="button" (click)="onRemove(object)">Remove</button>
+                    }
+                </td>
+                }
+
+            </tr>
+            }
+        } @else {
+            <tr>
+            <td [attr.colspan]="columns.length" class="template-table__empty">
+                No objects to display
+            </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

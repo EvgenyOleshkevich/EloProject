@@ -1,0 +1,55 @@
+<div class="login-page">
+
+    <div class="login-form-wrapper">
+        <form class="login-form" (ngSubmit)="onSubmit()">
+            <h3 class="login-form__title">login</h3>
+
+        <div class="login-form__field">
+            <label for="player1">Email</label>
+
+            <div class="login-form__autocomplete">
+            <input
+                id="player1"
+                name="email"
+                type="email"
+                [ngModel]="email()"
+                (ngModelChange)="email.set($event)"
+                placeholder="Write email"
+            />
+            </div>
+
+            @if (isEmailEmpty()) {
+            <small class="form__error">Email is required</small>
+            }
+        </div>
+
+        <div class="login-form__field">
+            <label for="player2">Password</label>
+
+            <div class="login-form__autocomplete">
+            <input
+                id="player2"
+                name="password"
+                type="password"
+                [ngModel]="password()"
+                (ngModelChange)="password.set($event)"
+                placeholder="Write password"
+                autocomplete="off"
+            />
+            </div>
+
+            @if (isPassworfEmpty()) {
+            <small class="form__error">Password is required</small>
+            }
+        </div>
+
+        <button type="submit" class="login-form__submit" [disabled]="isFormInvalid()">
+            login
+        </button>
+
+        @if (errorMessage()) {
+            <small class="form__error">{{ errorMessage() }}</small>
+        }
+        </form>
+    </div>
+</div>

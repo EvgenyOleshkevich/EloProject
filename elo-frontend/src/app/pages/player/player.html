@@ -1,0 +1,101 @@
+<div class="player-page">
+
+  <div class="player-content">
+    <!--
+        @if (ratingChartPoints().length) {
+        <section class="rating-chart-card">
+            <h3>Rating history</h3>
+
+            <svg class="rating-chart" viewBox="0 0 680 220">
+            <path
+                class="rating-chart__line"
+                [attr.d]="ratingChartPath()"
+                fill="none"
+            />
+            </svg>
+        </section>
+        }
+        -->
+
+        <section class="rating-chart-card">
+            <h3>Rating history</h3>
+
+            @if (ratingChartData(); as data) {
+            <div class="rating-chart-wrapper">
+                <canvas
+                baseChart
+                [data]="data"
+                [options]="ratingChartOptions"
+                [type]="'line'"
+                ></canvas>
+            </div>
+            } @else {
+            <div class="rating-chart-empty">
+                Not enough matches to display rating history
+            </div>
+            }
+        </section>
+
+        <aside class="player-info-card">
+        <div class="player-info-card__header">
+            <h3 class="player-info-card__title">
+            Player info
+            </h3>
+        </div>
+
+        <div class="player-info-card__section">
+            <div class="player-info-card__field">
+            <label for="playerName">Name</label>
+            <input
+                [(ngModel)]="playerName"
+                type="text"
+                id="playerName"
+                name="playerName"
+                placeholder="Write player name"
+            />
+            </div>
+
+            <div class="player-info-card__row">
+            <span>Rating</span>
+            <strong>{{ player()?.elo || 0 }}</strong>
+            </div>
+
+            <div class="player-info-card__row">
+            <span>Matches</span>
+            <strong>{{ player()?.numberMatches || 0 }}</strong>
+            </div>
+        </div>
+
+        @if (errorMessage()) {
+            <small class="form__error">{{ errorMessage() }}</small>
+        }
+
+        <div class="player-info-card__actions">
+            <button
+            type="button"
+            class="player-info-card__button player-info-card__button--primary"
+            (click)="onSubmit()"
+            >
+            Update player
+            </button>
+            <!--
+            <button
+            type="button"
+            class="player-info-card__button player-info-card__button--danger"
+            (click)="onRequestDeletePlayer()"
+            >
+            Delete player
+            </button>
+            -->
+        </div>
+        </aside>
+  </div>
+
+  <div class="player-content">
+    <div class="player-table-slot">
+        <app-table
+            [columns]="matchColumns()"
+            [objects]="matches()"/>
+    </div>
+  </div>
+</div>

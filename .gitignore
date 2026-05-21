@@ -1,0 +1,39 @@
+# =========================
+# IntelliJ
+# =========================
+.idea/
+*.iml
+
+# =========================
+# Backend / Spring Boot
+# =========================
+backend/.gradle/
+backend/build/
+backend/out/
+
+# Logs
+*.log
+
+# Env
+.env
+application-local.properties
+application-local.yml
+
+# =========================
+# Frontend / Angular
+# =========================
+elo-frontend/node_modules/
+elo-frontend/dist/
+elo-frontend/.angular/
+elo-frontend/coverage/
+
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Generated assets
+# =========================
+# elo-frontend/src/assets/images/

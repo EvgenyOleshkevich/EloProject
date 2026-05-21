@@ -1,0 +1,18 @@
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: #111827;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+}
+
+.icon-button:hover {
+  opacity: 0.75;
+}
+

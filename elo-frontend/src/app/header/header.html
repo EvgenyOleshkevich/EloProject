@@ -1,0 +1,23 @@
+<header class="navbar">
+    <div class="navbar__left">
+        <a class="navbar__brand" routerLink="/">GameHub</a>
+    </div>
+
+    <nav class="navbar__center">
+        <a routerLink="/games" routerLinkActive="active">Games</a>
+        <a routerLink="/players" routerLinkActive="active">Players</a>
+        <a routerLink="/tournaments" routerLinkActive="active">Tournamets</a>
+        <a routerLink="/matches" routerLinkActive="active">Matches</a>
+        <a routerLink="/about" routerLinkActive="active">About</a>
+    </nav>
+
+    
+    <div class="navbar__right">
+        @if(userService.isLoggedIn()) {
+            <button type="button" (click)="onLogout()">Logout</button>
+        }
+        @else {
+            <button type="button"  (click)="onLogin()">Login</button>
+        }
+    </div>
+</header>

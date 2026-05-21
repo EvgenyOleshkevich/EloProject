@@ -1,0 +1,50 @@
+<div class="tournament-page">
+  <div class="tournament-header">
+    <h2>{{tournament()?.name}}</h2>
+  </div>
+
+  <div class="tournament-content">
+        <app-elimination-active 
+            [tournament]="tournament()"
+            [isSimpleInput]="isSimpleInput()"
+            [readonly]="true"
+        />
+
+        <aside class="tournament-info-card">
+            <div class="tournament-info-card__header">
+            <h3 class="tournament-info-card__title">
+                Tournament info
+            </h3>
+
+            <span class="tournament-info-card__status">
+                {{ tournament()?.status }}
+            </span>
+            </div>
+
+            <div class="tournament-info-card__section">
+            <div class="tournament-info-card__row">
+                <span>Name</span>
+                <strong>{{ tournament()?.name }}</strong>
+            </div>
+
+            <div class="tournament-info-card__row">
+                <span>Type</span>
+                <strong>{{ tournamentType() }}</strong>
+            </div>
+
+            <div class="tournament-info-card__row">
+                <span>Players</span>
+                <strong>{{ tournament()?.players?.length || 0 }}</strong>
+            </div>
+            </div>
+        </aside>
+  </div>
+
+  <div class="tournament-content">
+    <div class="tournament-table-slot">
+        <app-table
+            [columns]="columns"
+            [objects]="playersInTournament()"/>
+    </div>
+  </div>
+</div>
