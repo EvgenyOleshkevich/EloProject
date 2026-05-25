@@ -17,17 +17,17 @@ export const GET_USERS = gql`
   query GetUsers {
     users {
       id
-      name
+      email
+      role
     }
   }
 `;
 
-export const GET_GAMES = gql`
+export const  GET_GAMES= gql`
   query GetGames {
     games {
       id
-      email
-      role
+      name
     }
   }
 `;

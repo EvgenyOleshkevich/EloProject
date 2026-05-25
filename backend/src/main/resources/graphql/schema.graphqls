@@ -96,6 +96,17 @@ type User {
   role: UserRole!
 }
 
+type Character {
+  id: ID!
+  gameId: ID!
+  name: String!
+  element: String!
+  rarity: Int!
+  constellation: Int!
+  constellationCost: [Int!]!
+  image: String!
+}
+
 type AuthPayload {
   token: String
   user: User
@@ -141,6 +152,16 @@ input AssignRoleInput {
   password: String!
 }
 
+type CharacterInput {
+  id: ID!
+  name: String!
+  element: String!
+  rarity: Int!
+  constellation: Int!
+  constellationCost: [Int!]!
+  image: String!
+}
+
 type Query {
   games: [Game!]!
   players: [Player!]!
@@ -153,6 +174,10 @@ type Query {
   matchesByPlayer(playerId: ID!): [Match!]!
   tournamentsByGame(gameId: ID!): [Tournament!]!
   tournament(id: ID!): Tournament!
+  characters: [Character!]!
+  charactersByGame(gameId: ID!): [Character!]!
+  character(id: ID!): Character
+  characterByName(gameId: ID!, name: String!): Character
 }
 
 type Mutation {
@@ -175,4 +200,7 @@ type Mutation {
   addPlayersToTournament(id: ID!, playerIds: [ID!]!, order: PlayersOrder!): [Match!]!
   deleteTournament(id: ID!): Boolean!
   reorderMatches(tournamentId: ID!, orders: [MatchOrderInput!]!): [Match!]!
+  createCharacter(character: GameInput!): Character
+  updateCharacter(character: GameInput!): Character
+  deleteCharacter(id: ID!): Boolean!
 }
