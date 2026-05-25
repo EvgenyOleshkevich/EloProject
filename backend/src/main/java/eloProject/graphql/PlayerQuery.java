@@ -1,6 +1,8 @@
 package eloProject.graphql;
 
+import eloProject.dto.RosterInput;
 import eloProject.model.Player;
+import eloProject.model.Roster;
 import eloProject.service.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -38,6 +40,11 @@ public class PlayerQuery {
     }
 
     @QueryMapping
+    public Roster playerRoster(@Argument String tournamentId, @Argument String playerId) {
+        return playerService.getRoster(tournamentId, playerId).orElse(null);
+    }
+
+    @QueryMapping
     @PreAuthorize("isAuthenticated()")
     public List<Player> getNearestPlayers(@Argument String id) {
         return playerService.getNearestPlayers(id);
@@ -60,5 +67,11 @@ public class PlayerQuery {
     public boolean deletePlayer(@Argument String id) {
         playerService.deletePlayer(id);
         return true;
+    }
+
+    @MutationMapping
+    @PreAuthorize("isAuthenticated()")
+    public Roster updateRoster(@Argument RosterInput roster) {
+        return playerService.updateRoster(roster);
     }
 }

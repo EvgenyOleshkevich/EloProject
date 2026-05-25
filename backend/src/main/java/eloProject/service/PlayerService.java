@@ -1,15 +1,17 @@
 package eloProject.service;
 
+import eloProject.dto.RosterInput;
 import eloProject.model.Match;
 import eloProject.model.Player;
 import eloProject.model.RatingResult;
+import eloProject.model.Roster;
 import eloProject.repository.MatchRepository;
 import eloProject.repository.PlayerRepository;
+import eloProject.repository.RosterRepository;
 import eloProject.util.EloCounter;
 import eloProject.util.enums.CompetitionStatus;
 import eloProject.util.enums.MatchResult;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,13 +19,12 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.lang.Math.abs;
-
 @Service
 @RequiredArgsConstructor
 public class PlayerService {
     private final PlayerRepository playerRepository;
     private final MatchRepository matchRepository;
+    private final RosterRepository rosterRepository;
 
     public List<Player> getAllPlayers() {
         return playerRepository.findAll();
@@ -75,6 +76,20 @@ public class PlayerService {
         return playerRepository.findByGameIdAndName(gameId, name);
     }
 
+    public Optional<Roster> getRoster(String tournamentId, String playerId) {
+        return rosterRepository.findByTournamentIdAndPlayerId(tournamentId, playerId);
+    }
+
+    public Roster updateRoster(RosterInput input) {
+        var roster = rosterRepository.findById(input.getId())
+                .orElseThrow(() -> new RuntimeException("Roster not found"));
+
+        roster.setCharacters(input.getCharacters());
+        roster.setWeapons(input.getWeapons());
+
+        return rosterRepository.save(roster);
+    }
+
     private Player create(String gameId, String name) {
         return Player.builder()
                 .gameId(gameId)
@@ -91,11 +106,8 @@ public class PlayerService {
     }
 
     public Player updatePlayer(String id, String name) {
-        var opt = playerRepository.findById(id);
-        if (opt.isEmpty()) {
-            throw new RuntimeException("Player not found");
-        }
-        var player = opt.get();
+        var player = playerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Player not found"));
         if (playerRepository.findByGameIdAndName(player.getGameId(), name).isPresent()) {
             throw new RuntimeException("Player with this name already exists in this game");
         }

@@ -107,6 +107,21 @@ type Character {
   image: String!
 }
 
+type Weapon {
+  id: ID!
+  gameId: ID!
+  name: String!
+  rarity: Int!
+  constellation: Int!
+  constellationCost: [Int!]!
+  image: String!
+}
+
+type RosterOutput {
+  characters: [Character!]!
+  weapons: [Weapon!]!
+}
+
 type AuthPayload {
   token: String
   user: User
@@ -152,7 +167,7 @@ input AssignRoleInput {
   password: String!
 }
 
-type CharacterInput {
+input CharacterInput {
   id: ID!
   name: String!
   element: String!
@@ -162,13 +177,24 @@ type CharacterInput {
   image: String!
 }
 
-type WeaponInput {
+input WeaponInput {
   id: ID!
   name: String!
   element: String!
   constellation: Int!
   constellationCost: [Int!]!
   image: String!
+}
+
+input  RosterInputItem {
+  itemId: ID!
+  constellation: Int!
+}
+
+input RosterInput {
+  id: ID!
+  characters: [RosterInputItem!]!
+  weapons: [RosterInputItem!]!
 }
 
 type Query {
@@ -178,6 +204,7 @@ type Query {
   player(id: ID!): Player
   playerByName(gameId: ID!, name: String!): Player
   getNearestPlayers(id: ID!): [Player!]!
+  playerRoster(tournamentId: ID!, playerId: ID!): RosterOutput
   matchesByGame(gameId: ID!): [Match!]!
   matchesByGameAndPlayer(gameId: ID!, playerId: ID!): [Match!]!
   matchesByPlayer(playerId: ID!): [Match!]!
@@ -204,6 +231,7 @@ type Mutation {
   createPlayer(gameId: ID!, name: String!): Player
   updatePlayer(id: ID!, name: String!): Player
   deletePlayer(id: ID!): Boolean!
+  updateRoster(roster: RosterInput!): RosterOutput
   completeMatch(id1: ID!, id2: ID!, res: MatchResult!): [Player]
   completeMatchWithNames(gameId: ID!, name1: String!, name2: String!, res: MatchResult!): [Player!]!
   completeTournamentMatch(input: MatchInput!): [Match!]!

@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface WeaponRepository extends MongoRepository<Weapon, String> {
     Optional<Weapon> findByGameIdAndName(String gameId, String name);
     List<Weapon> findByGameId(String gameId);
+    List<Weapon> findAllByIdIn(List<String> ids);
     void deleteByGameId(String gameId);
 }
