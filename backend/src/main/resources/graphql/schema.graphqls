@@ -162,6 +162,15 @@ type CharacterInput {
   image: String!
 }
 
+type WeaponInput {
+  id: ID!
+  name: String!
+  element: String!
+  constellation: Int!
+  constellationCost: [Int!]!
+  image: String!
+}
+
 type Query {
   games: [Game!]!
   players: [Player!]!
@@ -178,6 +187,10 @@ type Query {
   charactersByGame(gameId: ID!): [Character!]!
   character(id: ID!): Character
   characterByName(gameId: ID!, name: String!): Character
+  weapons: [Character!]!
+  weaponsByGame(gameId: ID!): [Weapon!]!
+  weapon(id: ID!): Weapon
+  weaponByName(gameId: ID!, name: String!): Weapon
 }
 
 type Mutation {
@@ -200,7 +213,10 @@ type Mutation {
   addPlayersToTournament(id: ID!, playerIds: [ID!]!, order: PlayersOrder!): [Match!]!
   deleteTournament(id: ID!): Boolean!
   reorderMatches(tournamentId: ID!, orders: [MatchOrderInput!]!): [Match!]!
-  createCharacter(character: GameInput!): Character
-  updateCharacter(character: GameInput!): Character
+  createCharacter(character: CharacterInput!): Character
+  updateCharacter(character: CharacterInput!): Character
   deleteCharacter(id: ID!): Boolean!
+  createWeapon(weapon: WeaponInput!): Weapon
+  updateWeapon(weapon: WeaponInput!): Weapon
+  deleteWeapon(id: ID!): Boolean!
 }
