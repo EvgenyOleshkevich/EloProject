@@ -1,0 +1,128 @@
+.auth {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+
+  &__container {
+    width: 100%;
+    max-width: 420px;
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  &__title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 0.75rem;
+  }
+
+  &__toggle {
+    background: none;
+    border: none;
+    color: #7c93c3;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
+
+    &:hover {
+      color: #a7b8d9;
+      text-decoration: underline;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__label {
+    font-size: 0.9rem;
+    color: #c5cfe3;
+    font-weight: 500;
+  }
+
+  &__input {
+    padding: 0.875rem 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &::placeholder {
+      color: #7a8ca5;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #5d7fc9;
+      box-shadow: 0 0 0 3px rgba(93, 127, 201, 0.2);
+    }
+  }
+
+  &__error {
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    margin: 0;
+    text-align: center;
+  }
+
+  &__button {
+    padding: 1rem;
+    background: linear-gradient(135deg, #5d7fc9, #7c93c3);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(93, 127, 201, 0.4);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  &__link {
+    display: block;
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #7c93c3;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+
+    &:hover {
+      color: #a7b8d9;
+      text-decoration: underline;
+    }
+  }
+}
